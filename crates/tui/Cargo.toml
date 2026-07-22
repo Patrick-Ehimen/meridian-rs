@@ -1,0 +1,9 @@
+[package]
+name = "meridian-tui"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+meridian-aggregator = { path = "../aggregator" }
+ratatui             = { workspace = true }
+tokio               = { workspace = true }

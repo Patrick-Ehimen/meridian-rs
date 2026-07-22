@@ -1,0 +1,13 @@
+[package]
+name = "meridian-venue-coinbase"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+meridian-core     = { path = "../../core" }
+tokio             = { workspace = true }
+tokio-tungstenite = { workspace = true }
+serde             = { workspace = true }
+serde_json        = { workspace = true }
+tracing           = { workspace = true }
+anyhow            = { workspace = true }

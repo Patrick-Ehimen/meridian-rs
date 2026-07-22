@@ -1,0 +1,33 @@
+[workspace]
+resolver = "2"
+members = [
+    "crates/core",
+    "crates/aggregator",
+    "crates/tui",
+    "crates/meridian",
+    "crates/venues/*",
+    "crates/server/*",
+]
+
+[workspace.dependencies]
+tokio = {version = "1", features = ["full"]}
+tonic = "0.14.0"
+prost          = "0.14.4"
+axum           = { version = "0.8.9", features = ["ws"] }
+ratatui        = "0.30.2"
+alloy          = { version = "2.2.0", features = ["providers", "contract"] }
+solana-client  = "4.1.2"
+dashmap        = "6"
+serde          = { version = "1", features = ["derive"] }
+serde_json     = "1"
+tokio-tungstenite = "0.30.0"
+tracing        = "0.1"
+tracing-subscriber = "0.3"
+thiserror      = "2.0.19"
+anyhow         = "1"
+async-trait    = "0.1"
+tonic-build    = "0.14"
+
+[profile.release]
+lto           = true
+codegen-units = 1

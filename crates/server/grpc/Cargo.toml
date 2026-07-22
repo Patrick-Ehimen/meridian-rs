@@ -1,0 +1,15 @@
+[package]
+name = "meridian-server-grpc"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+meridian-core       = { path = "../../core" }
+meridian-aggregator = { path = "../../aggregator" }
+tonic   = { workspace = true }
+prost   = { workspace = true }
+tokio   = { workspace = true }
+tracing = { workspace = true }
+
+[build-dependencies]
+tonic-build = { workspace = true }

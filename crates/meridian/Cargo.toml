@@ -1,0 +1,21 @@
+[package]
+name = "meridian"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+meridian-core       = { path = "../core" }
+meridian-aggregator = { path = "../aggregator" }
+meridian-server-grpc = { path = "../server/grpc" }
+meridian-server-rest = { path = "../server/rest" }
+meridian-server-ws   = { path = "../server/ws" }
+meridian-tui        = { path = "../tui" }
+meridian-venue-binance    = { path = "../venues/binance" }
+meridian-venue-coinbase   = { path = "../venues/coinbase" }
+meridian-venue-bybit      = { path = "../venues/bybit" }
+meridian-venue-uniswap-v3 = { path = "../venues/uniswap-v3" }
+meridian-venue-jupiter    = { path = "../venues/jupiter" }
+tokio              = { workspace = true }
+tracing            = { workspace = true }
+tracing-subscriber = { workspace = true }
+anyhow             = { workspace = true }
