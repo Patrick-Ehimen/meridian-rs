@@ -1,6 +1,6 @@
 # Git hooks
 
-Repo-managed hooks. Not active by default — enable once per clone:
+Repo-managed hooks. Not active by default — enable them once per clone:
 
 ```
 git config core.hooksPath .githooks
