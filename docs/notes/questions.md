@@ -24,7 +24,7 @@ A question stays here until it is fully resolved, then graduates to a
 
 | # | Question | Status |
 | --- | --- | --- |
-| [Q1](questions/q01-q64-96-precision.md) | Q64.96 precision demand | Open |
+| [Q1](questions/q01-q64-96-precision.md) | Q64.96 precision demand | Resolved |
 | [Q2](questions/q02-low-price-pair-scale.md) | Low-price pair under a fixed 8-decimal scale | Open |
 | [Q3](questions/q03-notional-overflow.md) | Notional overflow in the intermediate | Open |
 | [Q4](questions/q04-shared-scale.md) | Should `Price` and `Qty` carry the same scale? | Open |
