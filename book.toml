@@ -1,0 +1,24 @@
+[book]
+title = "meridian-rs - engineering notebook"
+description = "Design decisions, learnings, and working notes for the meridian-rs orderbook aggregator."
+authors = ["0xOse"]
+language = "en"
+src = "docs"
+
+[build]
+build-dir = "book"
+create-missing = false
+
+[output.html]
+default-theme = "ayu"
+preferred-dark-theme = "ayu"
+git-repository-url = "https://github.com/Patrick-Ehimen/meridian-rs"
+edit-url-template = "https://github.com/Patrick-Ehimen/meridian-rs/edit/main/{path}"
+mathjax-support = true
+
+[output.html.fold]
+enable = true
+level = 1
+
+[output.html.search]
+enable = true
