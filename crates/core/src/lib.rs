@@ -1,14 +1,7 @@
-pub fn add(left: u64, right: u64) -> u64 {
-    left + right
-}
+//! Meridian shared domain types.
+//!
+//! Under construction. See `docs/notes/questions.md` for the open questions
+//! that gate what lives here (primarily ADR 0001 for `Price`, `Qty`, `Symbol`).
 
 #[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn it_works() {
-        let result = add(2, 2);
-        assert_eq!(result, 4);
-    }
-}
+mod fixed_scale_analysis;
