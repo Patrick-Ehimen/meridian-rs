@@ -11,3 +11,6 @@ mod notional_overflow_analysis;
 
 #[cfg(test)]
 mod qty_scale_analysis;
+
+#[cfg(test)]
+mod rust_decimal_hash_check;

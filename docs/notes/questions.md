@@ -28,7 +28,7 @@ A question stays here until it is fully resolved, then graduates to a
 | [Q2](questions/q02-low-price-pair-scale.md) | Low-price pair under a fixed 8-decimal scale | Resolved |
 | [Q3](questions/q03-notional-overflow.md) | Notional overflow in the intermediate | Resolved |
 | [Q4](questions/q04-shared-scale.md) | Should `Price` and `Qty` carry the same scale? | Resolved |
-| [Q5](questions/q05-rust-decimal-hash.md) | Does `rust_decimal` hash equal for equal values? | Open |
+| [Q5](questions/q05-rust-decimal-hash.md) | Does `rust_decimal` hash equal for equal values? | Resolved |
 | [Q6](questions/q06-symbol-shape.md) | `Symbol` representation | Open |
 
 ## Book storage (blocking [ADR 0002](../decisions/0002-book-storage.md))

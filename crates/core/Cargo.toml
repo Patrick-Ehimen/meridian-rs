@@ -8,3 +8,6 @@ serde       = { workspace = true }
 thiserror   = { workspace = true }
 tokio       = { workspace = true }
 async-trait = { workspace = true }
+
+[dev-dependencies]
+rust_decimal = "1"
