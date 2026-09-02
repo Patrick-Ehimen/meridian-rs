@@ -17,14 +17,46 @@ struct Token {
 }
 
 const TOKENS: &[Token] = &[
-    Token { symbol: "USDC", decimals: 6,  usd_price: 1.0 },
-    Token { symbol: "USDT", decimals: 6,  usd_price: 1.0 },
-    Token { symbol: "WBTC", decimals: 8,  usd_price: 100_000.0 },
-    Token { symbol: "BONK", decimals: 5,  usd_price: 2e-8 },
-    Token { symbol: "SOL",  decimals: 9,  usd_price: 100.0 },
-    Token { symbol: "WETH", decimals: 18, usd_price: 3_000.0 },
-    Token { symbol: "SHIB", decimals: 18, usd_price: 1e-5 },
-    Token { symbol: "PEPE", decimals: 18, usd_price: 1e-6 },
+    Token {
+        symbol: "USDC",
+        decimals: 6,
+        usd_price: 1.0,
+    },
+    Token {
+        symbol: "USDT",
+        decimals: 6,
+        usd_price: 1.0,
+    },
+    Token {
+        symbol: "WBTC",
+        decimals: 8,
+        usd_price: 100_000.0,
+    },
+    Token {
+        symbol: "BONK",
+        decimals: 5,
+        usd_price: 2e-8,
+    },
+    Token {
+        symbol: "SOL",
+        decimals: 9,
+        usd_price: 100.0,
+    },
+    Token {
+        symbol: "WETH",
+        decimals: 18,
+        usd_price: 3_000.0,
+    },
+    Token {
+        symbol: "SHIB",
+        decimals: 18,
+        usd_price: 1e-5,
+    },
+    Token {
+        symbol: "PEPE",
+        decimals: 18,
+        usd_price: 1e-6,
+    },
 ];
 
 const CANDIDATE_SCALES: &[u32] = &[12, 18];
@@ -96,7 +128,10 @@ fn n12_truncation_is_below_dust_for_every_token() {
 fn n18_pads_every_token_without_loss() {
     for t in TOKENS {
         let lost = truncation_real(t.decimals, 18);
-        println!("{:>4}: decimals={:>2}  trunc@N=18 = {}", t.symbol, t.decimals, lost);
+        println!(
+            "{:>4}: decimals={:>2}  trunc@N=18 = {}",
+            t.symbol, t.decimals, lost
+        );
         assert_eq!(lost, 0.0);
     }
 }
@@ -109,7 +144,10 @@ fn weth_truncation_at_n12_stays_far_below_exchange_minimums() {
     let weth = TOKENS.iter().find(|t| t.symbol == "WETH").unwrap();
     let lost_real = truncation_real(weth.decimals, 12);
     let lost_usd = truncation_usd(weth, 12);
-    println!("WETH per-conversion loss = {:e} ETH = {:e} USD", lost_real, lost_usd);
+    println!(
+        "WETH per-conversion loss = {:e} ETH = {:e} USD",
+        lost_real, lost_usd
+    );
     // Binance ETH minimum: 0.0001 ETH = 1e-4. Truncation is 1e-12,
     // eight orders of magnitude below the minimum.
     assert!(lost_real < 1e-4 / 1e6);

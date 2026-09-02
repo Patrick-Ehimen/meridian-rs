@@ -18,22 +18,42 @@ struct Level {
 /// end for that pair type.
 const LEVELS: &[Level] = &[
     // High price, moderate qty (BTC book levels rarely hundreds).
-    Level {pair: "BTC/USD", price: 100_000.0, qty: 100.0 },
-    Level {pair: "ETH/USD", price: 3_000.0, qty: 10_000.0 },
-    Level {pair: "SOL/USD", price: 100.0, qty: 100_000.0 },
+    Level {
+        pair: "BTC/USD",
+        price: 100_000.0,
+        qty: 100.0,
+    },
+    Level {
+        pair: "ETH/USD",
+        price: 3_000.0,
+        qty: 10_000.0,
+    },
+    Level {
+        pair: "SOL/USD",
+        price: 100.0,
+        qty: 100_000.0,
+    },
     // Stable pairs: modest price, potentially huge qty.
-    Level { pair: "SHIB/USD", price: 1e-5, qty: 1e12 },
-    Level { pair: "PEPE/USD", price: 1e-6, qty: 1e13 },
+    Level {
+        pair: "SHIB/USD",
+        price: 1e-5,
+        qty: 1e12,
+    },
+    Level {
+        pair: "PEPE/USD",
+        price: 1e-6,
+        qty: 1e13,
+    },
 ];
 
 /// Candidate fixed scales for `Price` and `Qty` (same scale on both
 /// sides for this analysis; Q4 revisits whether they must match).
 const SCALES: &[u32] = &[12, 18];
-fn scaled(v:f64, n: u32) -> f64 {
+fn scaled(v: f64, n: u32) -> f64 {
     v * 10f64.powi(n as i32)
 }
 
-fn intermediate(price:f64, qty: f64, n: u32) -> f64 {
+fn intermediate(price: f64, qty: f64, n: u32) -> f64 {
     scaled(price, n) * scaled(qty, n)
 }
 
@@ -50,7 +70,7 @@ fn fits_i128(v: f64) -> bool {
 /// past ~15 digits but the ordering with anything smaller than 10^76
 /// still holds.
 fn fits_i256(v: f64) -> bool {
-    v.is_finite() && v >= 0.0 && v <= 5.789e76
+    (0.0..=5.789e76).contains(&v)
 }
 // The clean disqualification. Any realistic price * qty at N=12 blows
 // past i64::MAX. Rules out i64 as the intermediate width even for a
@@ -116,7 +136,10 @@ fn i128_survives_realistic_aggregation_at_n12() {
     println!("worst single-level    = {:e}", worst);
     println!("aggregated x {:>3}      = {:e}", AGGREGATED_LEVELS, summed);
     println!("i128::MAX             = {:e}", i128::MAX as f64);
-    println!("aggregation headroom  ~ {:.1} orders of magnitude", headroom);
+    println!(
+        "aggregation headroom  ~ {:.1} orders of magnitude",
+        headroom
+    );
     assert!(fits_i128(summed));
 }
 // Prints the full trade-off table so a reader can see the shape of the

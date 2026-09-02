@@ -53,12 +53,7 @@ fn multiple_representations_of_one_hash_equal() {
     let base = &variants[0];
     let base_hash = hash_of(base);
     for v in &variants[1..] {
-        println!(
-            "variant {} scale={} hash={}",
-            v,
-            v.scale(),
-            hash_of(v)
-        );
+        println!("variant {} scale={} hash={}", v, v.scale(), hash_of(v));
         assert_eq!(*v, *base, "variant {v} should compare equal to base");
         assert_eq!(
             hash_of(v),

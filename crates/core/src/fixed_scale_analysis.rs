@@ -17,12 +17,30 @@ struct Pair {
 /// Representative pairs spanning the price range Meridian will see.
 /// High: BTC. Mid: ETH, SOL, stablecoin. Low: SHIB, PEPE.
 const PAIRS: &[Pair] = &[
-    Pair { name: "BTC/USD", price: 100_000.0 },
-    Pair { name: "ETH/USD", price: 3_000.0 },
-    Pair { name: "SOL/USD", price: 100.0 },
-    Pair { name: "USDC/USDT", price: 1.0 },
-    Pair { name: "SHIB/USD", price: 0.00001 },
-    Pair { name: "PEPE/USD", price: 0.000001 },
+    Pair {
+        name: "BTC/USD",
+        price: 100_000.0,
+    },
+    Pair {
+        name: "ETH/USD",
+        price: 3_000.0,
+    },
+    Pair {
+        name: "SOL/USD",
+        price: 100.0,
+    },
+    Pair {
+        name: "USDC/USDT",
+        price: 1.0,
+    },
+    Pair {
+        name: "SHIB/USD",
+        price: 0.00001,
+    },
+    Pair {
+        name: "PEPE/USD",
+        price: 0.000001,
+    },
 ];
 
 /// Candidate fixed scales to evaluate.
@@ -112,7 +130,10 @@ fn small_n_fails_at_the_low_end() {
             .map(|p| p.name)
             .collect();
         println!("N={:>2}: tick > 1 bp for {:?}", n, failures);
-        assert!(!failures.is_empty(), "expected N={n} to under-resolve some pair");
+        assert!(
+            !failures.is_empty(),
+            "expected N={n} to under-resolve some pair"
+        );
     }
 }
 
@@ -126,7 +147,10 @@ fn large_n_overflows_i64_at_the_high_end() {
         .map(|p| p.name)
         .collect();
     println!("N=18: i64 overflow for {:?}", overflows);
-    assert!(!overflows.is_empty(), "expected N=18 to overflow i64 somewhere");
+    assert!(
+        !overflows.is_empty(),
+        "expected N=18 to overflow i64 somewhere"
+    );
 }
 
 // N=12 threads the needle for the pairs above: every one fits `i64` and
@@ -138,7 +162,10 @@ fn n12_works_for_all_representative_pairs() {
     for p in PAIRS {
         let s = scaled_value(p.price, 12);
         let t = tick_bps(p.price, 12);
-        println!("N=12, {:>10}: scaled = {:>18.4e}  tick = {:>10.6} bps", p.name, s, t);
+        println!(
+            "N=12, {:>10}: scaled = {:>18.4e}  tick = {:>10.6} bps",
+            p.name, s, t
+        );
         assert!(fits_i64(s), "{} overflows i64 at N=12", p.name);
         assert!(t < MAX_TICK_BPS, "{} tick exceeds 1 bp at N=12", p.name);
     }
@@ -153,7 +180,10 @@ fn n12_fails_for_hypothetical_extreme_low_pair() {
     let extreme_price = 1e-10_f64;
     let s = scaled_value(extreme_price, 12);
     let t = tick_bps(extreme_price, 12);
-    println!("N=12, hypothetical 1e-10 pair: scaled = {:.4e}  tick = {:.4} bps", s, t);
+    println!(
+        "N=12, hypothetical 1e-10 pair: scaled = {:.4e}  tick = {:.4} bps",
+        s, t
+    );
     assert!(t > MAX_TICK_BPS);
 }
 

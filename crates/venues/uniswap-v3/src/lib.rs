@@ -1,4 +1,4 @@
-use alloy::primitives::{U256, U512, uint};
+use alloy::primitives::{U256, uint};
 
 // Uniswap v3 sqrtPriceX96 primitives.
 /// Number of binary fractional bits in a Q64.96 fixed-point value.
@@ -19,8 +19,7 @@ pub const MIN_SQRT_RATIO: U256 = uint!(4295128739_U256);
 /// This value has 49 decimal digits and exceeds `u128::MAX` by ~10 decimal
 /// digits. Any Rust code that stores a real-world `sqrtPriceX96` in a
 /// `u128` is a latent overflow bug on high-price pools. See Q1 sub-part 2.
-pub const MAX_SQRT_RATIO: U256 =
-    uint!(1461446703485210103287273052203988822378723970342_U256);
+pub const MAX_SQRT_RATIO: U256 = uint!(1461446703485210103287273052203988822378723970342_U256);
 
 /// Number of binary fractional bits after squaring a `sqrtPriceX96`.
 /// Squaring doubles Q64.96's fractional bits from 96 to 192, giving
@@ -32,13 +31,12 @@ pub const PRICE_SHIFT: u32 = 2 * SQRT_PRICE_SHIFT;
 /// right by `PRICE_SHIFT`).
 ///
 /// 2^192 needs bit 192 set, which fits in `U256`'s 256 bits.
-pub const Q192: U256 =
-    uint!(6277101735386680763835789423207666416102355444464034512896_U256);
-
+pub const Q192: U256 = uint!(6277101735386680763835789423207666416102355444464034512896_U256);
 
 #[cfg(test)]
 mod tests {
     use super::*;
+    use alloy::primitives::U512;
 
     // Q96 must equal 2^96 exactly. If this ever fails, the constant is wrong.
     #[test]
@@ -212,5 +210,4 @@ mod tests {
         assert!(Q192 > lower);
         assert!(Q192 < upper);
     }
-
 }

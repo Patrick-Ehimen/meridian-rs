@@ -40,9 +40,8 @@ fn ticker(bytes: &[u8]) -> Ticker {
 #[test]
 fn representative_tickers_fit_max_ticker_len() {
     let representative = [
-        "BTC", "ETH", "SOL", "USDT", "USDC", "WBTC", "WETH", "SHIB",
-        "PEPE", "BONK", "1000PEPE", "1000BONK", "MATIC", "AVAX",
-        "DOGE", "TRUMP", "WEETH",
+        "BTC", "ETH", "SOL", "USDT", "USDC", "WBTC", "WETH", "SHIB", "PEPE", "BONK", "1000PEPE",
+        "1000BONK", "MATIC", "AVAX", "DOGE", "TRUMP", "WEETH",
     ];
     for t in representative {
         println!("{:>10} : {} bytes", t, t.len());
@@ -60,7 +59,10 @@ fn representative_tickers_fit_max_ticker_len() {
 // well under a cache line.
 #[test]
 fn canonical_symbol_is_copy_and_small() {
-    let btcusdt = CanonicalSymbol { base: ticker(b"BTC"), quote: ticker(b"USDT") };
+    let btcusdt = CanonicalSymbol {
+        base: ticker(b"BTC"),
+        quote: ticker(b"USDT"),
+    };
     let clone = btcusdt;
     assert_eq!(btcusdt, clone);
 
@@ -80,8 +82,14 @@ fn identically_spelled_symbols_are_equal_and_hash_equal() {
         h.finish()
     }
 
-    let a = CanonicalSymbol { base: ticker(b"BTC"), quote: ticker(b"USDT") };
-    let b = CanonicalSymbol { base: ticker(b"BTC"), quote: ticker(b"USDT") };
+    let a = CanonicalSymbol {
+        base: ticker(b"BTC"),
+        quote: ticker(b"USDT"),
+    };
+    let b = CanonicalSymbol {
+        base: ticker(b"BTC"),
+        quote: ticker(b"USDT"),
+    };
     assert_eq!(a, b);
     assert_eq!(hash_of(&a), hash_of(&b));
 }
@@ -90,9 +98,18 @@ fn identically_spelled_symbols_are_equal_and_hash_equal() {
 // wants stable output ordering (BTreeMap keyed on Symbol).
 #[test]
 fn symbols_have_total_order() {
-    let s1 = CanonicalSymbol { base: ticker(b"BTC"), quote: ticker(b"USDT") };
-    let s2 = CanonicalSymbol { base: ticker(b"ETH"), quote: ticker(b"USDT") };
-    let s3 = CanonicalSymbol { base: ticker(b"BTC"), quote: ticker(b"USDC") };
+    let s1 = CanonicalSymbol {
+        base: ticker(b"BTC"),
+        quote: ticker(b"USDT"),
+    };
+    let s2 = CanonicalSymbol {
+        base: ticker(b"ETH"),
+        quote: ticker(b"USDT"),
+    };
+    let s3 = CanonicalSymbol {
+        base: ticker(b"BTC"),
+        quote: ticker(b"USDC"),
+    };
 
     let mut sorted = vec![s2, s1, s3];
     sorted.sort();
@@ -107,8 +124,13 @@ fn symbols_have_total_order() {
 #[test]
 fn ethereum_pool_address_does_not_fit_ticker() {
     const ETH_ADDRESS_LEN: usize = 20;
-    println!("Ethereum address = {} bytes, Ticker = {} bytes", ETH_ADDRESS_LEN, MAX_TICKER_LEN);
-    assert!(ETH_ADDRESS_LEN > MAX_TICKER_LEN);
+    // Compile-time assertion so the invariant fails the build if the
+    // ticker size is ever bumped past 20.
+    const _: () = assert!(ETH_ADDRESS_LEN > MAX_TICKER_LEN);
+    println!(
+        "Ethereum address = {} bytes, Ticker = {} bytes",
+        ETH_ADDRESS_LEN, MAX_TICKER_LEN
+    );
 }
 
 // Same story for Solana: 32-byte pubkeys, 64 bytes for a pair.
@@ -118,8 +140,10 @@ fn solana_mint_pair_does_not_fit_canonical_symbol() {
     const SOLANA_PUBKEY_LEN: usize = 32;
     let sym_size = size_of::<CanonicalSymbol>();
     let pair_size = 2 * SOLANA_PUBKEY_LEN;
-    println!("Solana mint pair = {} bytes, CanonicalSymbol = {} bytes",
-        pair_size, sym_size);
+    println!(
+        "Solana mint pair = {} bytes, CanonicalSymbol = {} bytes",
+        pair_size, sym_size
+    );
     assert!(pair_size > sym_size);
 }
 
@@ -129,10 +153,14 @@ fn solana_mint_pair_does_not_fit_canonical_symbol() {
 fn print_symbol_option_sizes() {
     println!();
     println!("Storage cost per Symbol, three options:");
-    println!("  A. CanonicalSymbol (base+quote Ticker)   = {} bytes  Copy",
-        size_of::<CanonicalSymbol>());
-    println!("  B. Interned u32                          = {} bytes  needs registry",
-        size_of::<u32>());
+    println!(
+        "  A. CanonicalSymbol (base+quote Ticker)   = {} bytes  Copy",
+        size_of::<CanonicalSymbol>()
+    );
+    println!(
+        "  B. Interned u32                          = {} bytes  needs registry",
+        size_of::<u32>()
+    );
     println!("  C. Enum over venue-native identifiers    = variable  no cross-venue equality");
     println!();
     println!("Meridian scale: a few hundred symbols across all venues.");
