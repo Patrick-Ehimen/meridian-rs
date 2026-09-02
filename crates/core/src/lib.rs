@@ -14,3 +14,6 @@ mod qty_scale_analysis;
 
 #[cfg(test)]
 mod rust_decimal_hash_check;
+
+#[cfg(test)]
+mod symbol_shape_analysis;
