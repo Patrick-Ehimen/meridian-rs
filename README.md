@@ -7,6 +7,9 @@ and Jupiter, normalizes it into one internal representation, and derives
 consolidated depth, VWAP, order-flow imbalance and arbitrage signals. It serves
 the result over gRPC, REST, WebSocket and a `ratatui` terminal UI.
 
+**[Read the engineering notebook](https://patrick-ehimen.github.io/meridian-rs/)**
+for the design decisions behind it.
+
 > **Status: early.** The Cargo workspace, CI and documentation are in place. The
 > core domain types are still being designed. See the
 > [decision log](docs/decisions/index.md). No venue adapter is implemented yet.
@@ -35,16 +38,20 @@ cargo ci            # fmt --check + clippy -D warnings + test (see .cargo/config
 
 ## Docs
 
-The engineering notebook is an mdBook. It records the reasoning the source cannot
-carry: architecture decision records, confirmed venue quirks, and unresolved
-questions.
+The engineering notebook is published at
+**<https://patrick-ehimen.github.io/meridian-rs/>**, rebuilt from `docs/` on every
+push to `main`.
+
+It is an mdBook, and it records the reasoning the source cannot carry:
+architecture decision records, confirmed venue quirks, and unresolved questions.
+To work on it locally:
 
 ```bash
 mdbook serve --open   # live-reload on :3000
 mdbook build          # static output into ./book (gitignored)
 ```
 
-Start at [docs/index.md](docs/index.md).
+The source pages live in [docs/](docs/), starting at [docs/index.md](docs/index.md).
 
 ## License
 
