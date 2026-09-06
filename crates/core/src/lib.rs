@@ -1,7 +1,19 @@
 //! Meridian shared domain types.
 //!
-//! Under construction. See `docs/notes/questions.md` for the open questions
-//! that gate what lives here (primarily ADR 0001 for `Price`, `Qty`, `Symbol`).
+//! Every other crate speaks these types. Adapters normalize venue-native
+//! payloads *into* them; the aggregator, servers and TUI only ever see them.
+//!
+//! Numeric representation is fixed by [ADR 0001]. The fixed-point `Price`
+//! and `Qty` types land in a follow-up commit; this one establishes the
+//! instrument identity and error vocabulary they build on.
+//!
+//! [ADR 0001]: ../../../docs/decisions/0001-core-types.md
+
+mod error;
+mod symbol;
+
+pub use error::CoreError;
+pub use symbol::{MAX_TICKER_LEN, Symbol, Ticker};
 
 #[cfg(test)]
 mod fixed_scale_analysis;
