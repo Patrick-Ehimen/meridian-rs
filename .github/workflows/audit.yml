@@ -9,6 +9,13 @@ on:
     - cron: "0 6 * * 1"
   workflow_dispatch:
 
+# `rustsec/audit-check` reports findings by creating a check run, which
+# needs `checks: write`. Without it the audit itself succeeds and the job
+# then fails on "Resource not accessible by integration" while publishing.
+permissions:
+  contents: read
+  checks: write
+
 jobs:
   audit:
     runs-on: ubuntu-latest
