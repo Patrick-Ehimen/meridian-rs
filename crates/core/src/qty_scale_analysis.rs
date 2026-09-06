@@ -89,12 +89,16 @@ fn native_scaled_max(token_decimals: u32, whole_units_worst_case: f64) -> f64 {
     whole_units_worst_case * 10f64.powi(token_decimals as i32)
 }
 
+// `i64::MAX as f64` rounds UP to 2^63, one past the real maximum, so a
+// naive `v <= i64::MAX as f64` accepts values that do not fit. Compare
+// against the exact power of two instead: 2^63 is representable in f64,
+// and a non-negative value fits i64 exactly when it is strictly below it.
 fn fits_i64(v: f64) -> bool {
-    v.is_finite() && v >= 0.0 && v <= i64::MAX as f64
+    v.is_finite() && (0.0..9_223_372_036_854_775_808.0).contains(&v)
 }
 
 fn fits_i128(v: f64) -> bool {
-    v.is_finite() && v >= 0.0 && v <= i128::MAX as f64
+    v.is_finite() && (0.0..170_141_183_460_469_231_731_687_303_715_884_105_728.0).contains(&v)
 }
 
 // Headline finding for Option A: at N=12, every token in the current

@@ -1,7 +1,24 @@
 //! Meridian shared domain types.
 //!
-//! Under construction. See `docs/notes/questions.md` for the open questions
-//! that gate what lives here (primarily ADR 0001 for `Price`, `Qty`, `Symbol`).
+//! Every other crate speaks these types. Adapters normalize venue-native
+//! payloads *into* them; the aggregator, servers and TUI only ever see them.
+//!
+//! Numeric representation is fixed by [ADR 0001]: prices and quantities are
+//! fixed-point integers at [`SCALE`] decimal places, stored in `i64`, with an
+//! `i128` intermediate for every product. See [`amount`] for the arithmetic
+//! rules and [`symbol`] for cross-venue instrument identity.
+//!
+//! [ADR 0001]: ../../../docs/decisions/0001-core-types.md
+
+mod amount;
+mod error;
+mod symbol;
+
+pub use amount::{
+    NOTIONAL_SCALE, NOTIONAL_SCALE_FACTOR, Notional, Price, Qty, SCALE, SCALE_FACTOR,
+};
+pub use error::CoreError;
+pub use symbol::{MAX_TICKER_LEN, Symbol, Ticker};
 
 #[cfg(test)]
 mod fixed_scale_analysis;
