@@ -65,11 +65,12 @@ fn tick_bps(price: f64, n: u32) -> f64 {
 // against the exact power of two instead: 2^63 is representable in f64,
 // and a non-negative value fits i64 exactly when it is strictly below it.
 fn fits_i64(scaled: f64) -> bool {
-    scaled.is_finite() && scaled >= 0.0 && scaled < 9_223_372_036_854_775_808.0
+    scaled.is_finite() && (0.0..9_223_372_036_854_775_808.0).contains(&scaled)
 }
 
 fn fits_i128(scaled: f64) -> bool {
-    scaled.is_finite() && scaled >= 0.0 && scaled < 170_141_183_460_469_231_731_687_303_715_884_105_728.0
+    scaled.is_finite()
+        && (0.0..170_141_183_460_469_231_731_687_303_715_884_105_728.0).contains(&scaled)
 }
 
 // At N=8, SHIB (~$10^-5) has a tick of 10 bps and PEPE (~$10^-6) has a tick
