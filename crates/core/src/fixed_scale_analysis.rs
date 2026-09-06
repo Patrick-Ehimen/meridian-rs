@@ -60,12 +60,16 @@ fn tick_bps(price: f64, n: u32) -> f64 {
     (10f64.powi(-(n as i32)) / price) * 10_000.0
 }
 
+// `i64::MAX as f64` rounds UP to 2^63, one past the real maximum, so a
+// naive `scaled <= i64::MAX as f64` accepts values that do not fit. Compare
+// against the exact power of two instead: 2^63 is representable in f64,
+// and a non-negative value fits i64 exactly when it is strictly below it.
 fn fits_i64(scaled: f64) -> bool {
-    scaled.is_finite() && scaled >= 0.0 && scaled <= i64::MAX as f64
+    scaled.is_finite() && scaled >= 0.0 && scaled < 9_223_372_036_854_775_808.0
 }
 
 fn fits_i128(scaled: f64) -> bool {
-    scaled.is_finite() && scaled >= 0.0 && scaled <= i128::MAX as f64
+    scaled.is_finite() && scaled >= 0.0 && scaled < 170_141_183_460_469_231_731_687_303_715_884_105_728.0
 }
 
 // At N=8, SHIB (~$10^-5) has a tick of 10 bps and PEPE (~$10^-6) has a tick
