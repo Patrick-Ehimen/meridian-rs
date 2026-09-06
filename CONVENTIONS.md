@@ -59,23 +59,26 @@ me more when I reread it in six months than "`f64` was rejected because...".
 
 ## Enforcement
 
-`scripts/check-dashes.sh` fails on any of the four characters:
+I do not enforce this with a script or a git hook. The rule lives in my tooling
+instructions instead: `claude.md`, which loads into every Claude Code session,
+and `.claude/00-conventions.md`, the conventions file I point Claude at while
+working a step.
+
+That is deliberate. The point is to not type the characters in the first place,
+and a hook that lets me type them and then rejects the commit trains the opposite
+habit: write freely, let the tool clean up. I would rather carry the rule in my
+head and in the instructions I give my tools.
+
+If I want to spot-check the tree by hand:
 
 ```bash
-./scripts/check-dashes.sh              # every git-tracked file
-./scripts/check-dashes.sh FILE...      # specific files
+command grep -rInH $'[–—―−]' --include='*.md' --include='*.rs' \
+    --exclude-dir=target --exclude-dir=book .
 ```
 
-My pre-commit hook runs it against staged files on every commit, including
-markdown-only commits. Hooks are opt-in per clone:
-
-```bash
-git config core.hooksPath .githooks
-```
-
-This page and the script itself are allowlisted, since both have to contain the
-characters to document and match them.
-
-The check deliberately calls `command grep`. A plain `grep` may be wrapped by a
+I call `command grep` deliberately. A plain `grep` may be wrapped by a
 gitignore-aware tool, which silently skips untracked and ignored files and will
 report a clean tree that is not clean.
+
+This page is the one file that has to contain the characters, since it documents
+them.
