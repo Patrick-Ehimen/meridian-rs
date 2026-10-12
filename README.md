@@ -1,6 +1,6 @@
 # meridian-rs
 
-Multi-exchange orderbook aggregator built in Rust. Providing CEX + DEX feeds, consolidated depth, arbitrage detection, and a live terminal UI.
+Multi-exchange orderbook aggregator built in Rust. Providing CEX and DEX feeds, consolidated depth, arbitrage detection, and a live terminal UI.
 
 Ingests real-time book and trade data from Binance, Coinbase, Bybit, Uniswap V3
 and Jupiter, normalizes it into one internal representation, and derives
