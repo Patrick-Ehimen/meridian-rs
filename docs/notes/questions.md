@@ -43,8 +43,8 @@ A question stays here until it is fully resolved, then graduates to a
 | # | Question | Status |
 | --- | --- | --- |
 | [Q9](questions/q09-coinbase-no-sequence.md) | Coinbase `l2update` has no sequence number | Open |
-| [Q10](questions/q10-venuefeed-gap-detection.md) | Where does gap detection live in the `VenueFeed` trait? | Open |
-| [Q11](questions/q11-backpressure.md) | Backpressure contract across venues | Open |
+| [Q10](questions/q10-venuefeed-gap-detection.md) | Where does gap detection live in the `VenueFeed` trait? | Resolved |
+| [Q11](questions/q11-backpressure.md) | Backpressure contract across venues | Resolved |
 
 ## Aggregation
 

@@ -38,3 +38,4 @@ Not every commit needs one. If there was only ever one sane option, it belongs i
 | --- | --- | --- |
 | [0001](0001-core-types.md) | Core price & quantity types | Accepted |
 | [0002](0002-book-storage.md) | Order book side storage | Accepted |
+| [0003](0003-venue-feed-shape.md) | Venue adapters push one ordered event stream per session | Accepted |

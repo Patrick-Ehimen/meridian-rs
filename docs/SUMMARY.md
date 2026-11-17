@@ -9,6 +9,7 @@
 - [Decision log](decisions/index.md)
   - [0001 - Core price & quantity types](decisions/0001-core-types.md)
   - [0002 - Order book side storage](decisions/0002-book-storage.md)
+  - [0003 - Venue feed shape](decisions/0003-venue-feed-shape.md)
 
 # Learnings
 
