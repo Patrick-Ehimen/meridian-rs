@@ -3,6 +3,10 @@ name = "meridian-core"
 version = "0.1.0"
 edition = "2024"
 
+[features]
+# Exposes `meridian_core::testing` (MockFeed) to downstream crates' tests.
+testing = []
+
 [dependencies]
 serde       = { workspace = true }
 thiserror   = { workspace = true }
