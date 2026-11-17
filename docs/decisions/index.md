@@ -36,5 +36,5 @@ Not every commit needs one. If there was only ever one sane option, it belongs i
 
 | # | Decision | Status |
 | --- | --- | --- |
-| [0001](0001-core-types.md) | Core price & quantity types | Proposed |
-| [0002](0002-book-storage.md) | Order book side storage | Proposed |
+| [0001](0001-core-types.md) | Core price & quantity types | Accepted |
+| [0002](0002-book-storage.md) | Order book side storage | Accepted |

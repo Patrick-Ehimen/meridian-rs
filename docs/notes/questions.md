@@ -35,8 +35,8 @@ A question stays here until it is fully resolved, then graduates to a
 
 | # | Question | Status |
 | --- | --- | --- |
-| [Q7](questions/q07-btreemap-range.md) | Which aggregator operation needs `BTreeMap::range`? | Open |
-| [Q8](questions/q08-bid-ordering.md) | Bid ordering idiom | Open |
+| [Q7](questions/q07-btreemap-range.md) | Which aggregator operation needs `BTreeMap::range`? | Resolved |
+| [Q8](questions/q08-bid-ordering.md) | Bid ordering idiom | Resolved |
 
 ## Ingestion
 
