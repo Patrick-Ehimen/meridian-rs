@@ -53,4 +53,38 @@ pub enum CoreError {
     /// A ticker was empty.
     #[error("ticker cannot be empty")]
     TickerEmpty,
+
+    /// A venue name did not match any [`Venue`](crate::Venue).
+    #[error("unknown venue {0:?}")]
+    UnknownVenue(String),
+
+    /// A delta started after the update the book expected next, so at least
+    /// one message was dropped. The book is untouched; the adapter must
+    /// resnap. Never continue past this.
+    #[error("sequence gap: expected update {expected}, delta starts at {got}")]
+    SequenceGap { expected: u64, got: u64 },
+
+    /// A delta claimed a first update id greater than its last. That is a
+    /// malformed payload, not a gap.
+    #[error("delta update range is inverted: first {first} > last {last}")]
+    InvalidUpdateRange { first: u64, last: u64 },
+
+    /// After an update the best bid was at or above the best ask. Either the
+    /// venue sent a bad diff or an earlier one was misapplied; either way the
+    /// book can no longer be trusted and must be resnapped.
+    #[error("crossed book: best bid {best_bid} >= best ask {best_ask}")]
+    CrossedBook {
+        best_bid: crate::Price,
+        best_ask: crate::Price,
+    },
+
+    /// A delta was routed to a book for a different venue or symbol. That is
+    /// an adapter routing bug, and applying it would corrupt the book.
+    #[error("delta for {got_venue} {got_symbol} applied to book for {venue} {symbol}")]
+    BookMismatch {
+        venue: crate::Venue,
+        symbol: crate::Symbol,
+        got_venue: crate::Venue,
+        got_symbol: crate::Symbol,
+    },
 }

@@ -8,17 +8,31 @@
 //! `i128` intermediate for every product. See [`amount`] for the arithmetic
 //! rules and [`symbol`] for cross-venue instrument identity.
 //!
+//! Book storage is fixed by [ADR 0002]: each side is a `BTreeMap<Price, Qty>`
+//! behind a [`BookSide`] that iterates best first, so no caller handles the
+//! bid/ask direction by hand. See [`book`] for the sequencing contract that
+//! [`Book::apply`] enforces.
+//!
 //! [ADR 0001]: ../../../docs/decisions/0001-core-types.md
+//! [ADR 0002]: ../../../docs/decisions/0002-book-storage.md
 
 mod amount;
+mod book;
 mod error;
+mod side;
 mod symbol;
+mod time;
+mod venue;
 
 pub use amount::{
     NOTIONAL_SCALE, NOTIONAL_SCALE_FACTOR, Notional, Price, Qty, SCALE, SCALE_FACTOR,
 };
+pub use book::{ApplyOutcome, Book, BookDelta, BookEvent, BookSide, LevelUpdate, Levels};
 pub use error::CoreError;
+pub use side::{Level, Side};
 pub use symbol::{MAX_TICKER_LEN, Symbol, Ticker};
+pub use time::Timestamp;
+pub use venue::Venue;
 
 #[cfg(test)]
 mod fixed_scale_analysis;

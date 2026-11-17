@@ -11,4 +11,5 @@ async-trait = { workspace = true }
 
 [dev-dependencies]
 rust_decimal = "1"
+proptest     = "1"
 serde_json   = { workspace = true }
